@@ -7,7 +7,7 @@ export function getCurrentYear() {
     return getYear(today)
 }
 
-export function add(date, number, type = DATE_UNIT_TYPES.DAYS) {
+export function add(date: Date, number: number, type = DATE_UNIT_TYPES.DAYS) {
     switch (type) {
         case DATE_UNIT_TYPES.SECONDS:
             return fnsAdd(date, { seconds: number })
@@ -24,17 +24,17 @@ export function add(date, number, type = DATE_UNIT_TYPES.DAYS) {
     }
 }
 
-export function isWithinRange(date, from, to) {
+export function isWithinRange(date: Date, from: Date, to: Date) {
     if (isSameDay(date, from) || isSameDay(date, to)) {
         return false
     }
     return isWithinInterval(date, { start: from, end: to })
 }
 
-export function isDateBefore(date, compareDate) {
+export function isDateBefore(date: Date, compareDate: Date) {
     return isBefore(date, compareDate)
 }
 
-export function isSameDay(date, compareDate) {
+export function isSameDay(date: Date, compareDate: Date) {
     return isEqual(date, compareDate)
 }
