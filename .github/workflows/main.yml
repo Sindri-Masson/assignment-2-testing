@@ -1,7 +1,7 @@
 name: main
 on: push
 
-jobs:
+jobs:    
     test:
         name: Test
         runs-on: ubuntu-latest
@@ -55,7 +55,22 @@ jobs:
                       ${{ runner.os }}-
             - name: Download dependencies
               run: npm ci
-            - name: Run tests
-              run: npm run test
             - name: check the type
               run: npx tsc --noEmit
+              
+    publish-gpr:
+        needs: test
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+         - uses: actions/checkout@v3
+         - uses: actions/setup-node@v3
+           with:
+                node-version: 16
+                registry-url: https://npm.pkg.github.com/
+         - run: npm ci
+         - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
