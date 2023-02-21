@@ -3,15 +3,26 @@ import rule from "../rules/camelCase";
 import { RuleTester } from "eslint";
 
 test("camelCase", () => {
-  var ruleTester = new RuleTester();
+  const ruleTester = new RuleTester({
+    parserOptions: {
+      ecmaVersion: 2021,
+    },
+  });
+
   ruleTester.run("camelCase", rule, {
-    valid: ["camelCase", "rule", "bingoBongo"],
+    valid: [
+      "function myFunction() { }",
+      "const myVariable = function myFunction() { }",
+    ],
     invalid: [
       {
-        code: "camel_case",
+        code: "function my_function() { }",
         errors: [
           {
-            message: 'Identifier "camel_case" is not in camelCase.',
+            messageId: "camelCase",
+            data: {
+              name: "my_function",
+            },
           },
         ],
       },
