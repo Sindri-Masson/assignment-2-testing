@@ -2,102 +2,128 @@ name: main
 on: push
 
 jobs:
-    test:
-        name: Test
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repo
-              uses: actions/checkout@v3.3.0
-            - name: Setup Node.js environment
-              uses: actions/setup-node@v3.6.0
-              with:
-                  node-version: 18
-                  registry-url: https://npm.pkg.github.com/
-            - name: Cache node modules
-              uses: actions/cache@v3
-              env:
-                  cache-name: cache-node-modules
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-${{ env.cache-name }}-
-                      ${{ runner.os }}-build-
-                      ${{ runner.os }}-
-            - name: Download dependencies
-              run: npm ci
-            - name: Run tests
-              run: npm run test -- --coverage
-            - name: Codecov
-              uses: codecov/codecov-action@v3.1.1
-              with:
-                  token: ${{ secrets.CODECOV_TOKEN }}
-
-    typecheck:
-        name: Typecheck
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repo
-              uses: actions/checkout@v3.3.0
-            - name: Setup Node.js environment
-              uses: actions/setup-node@v3.6.0
-              with:
-                  node-version: 18
-            - name: Cache node modules
-              uses: actions/cache@v3
-              env:
-                  cache-name: cache-node-modules
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-${{ env.cache-name }}-
-                      ${{ runner.os }}-build-
-                      ${{ runner.os }}-
-            - name: Download dependencies
-              run: npm ci
-            - name: check the type
-              run: npm run type-check
-
-    lint:
-        name: Lint
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repo
-              uses: actions/checkout@v3.3.0
-            - name: Setup Node.js environment
-              uses: actions/setup-node@v3.6.0
-              with:
-                  node-version: 18
-            - name: Cache node modules
-              uses: actions/cache@v3
-              env:
-                  cache-name: cache-node-modules
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-${{ env.cache-name }}-
-                      ${{ runner.os }}-build-
-                      ${{ runner.os }}-
-            - name: Download dependencies
-              run: npm ci
-            - name: Run lint
-              run: npm run lint
-
-    publish-gpr:
-        needs: test
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-                  registry-url: https://npm.pkg.github.com/
-            - run: npm ci
-            - run: npm publish
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3.3.0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+      - name: Cache node modules
+        uses: actions/cache@v3
         env:
-            NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Download dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test -- --coverage
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3.3.0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Download dependencies
+        run: npm ci
+      - name: check the type
+        run: npm run type-check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3.3.0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Download dependencies
+        run: npm ci
+      - name: Run lint
+        run: npm run lint
+
+  prettier:
+    name: Pretter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3.3.0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Download dependencies
+        run: npm ci
+      - name: Run prettier
+        run: npm run prettier
+
+  publish-gpr:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - run: npm publish
+    env:
+      NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

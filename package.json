@@ -1,27 +1,29 @@
 {
-    "name": "@sindri-masson/assignment-2-testing",
-    "version": "1.0.4",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "vitest",
-        "type-check": "tsc --noEmit",
-        "lint": "eslint src"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "date-fns": "^2.29.3",
-        "moment": "^2.29.4",
-        "typescript": "^4.9.4",
-        "vitest": "^0.27.3"
-    },
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.52.0",
-        "@typescript-eslint/parser": "^5.51.0",
-        "eslint": "^8.34.0",
-        "eslint-plugin-sindri": "file:./rules",
-        "@vitest/coverage-c8": "^0.28.5"
-    }
+  "name": "@sindri-masson/assignment-2-testing",
+  "version": "1.0.4",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src",
+    "prettier": "prettier --check ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "moment": "^2.29.4",
+    "typescript": "^4.9.4",
+    "vitest": "^0.27.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "@vitest/coverage-c8": "^0.28.5",
+    "eslint": "^8.34.0",
+    "eslint-plugin-sindri": "file:./rules",
+    "prettier": "2.8.4"
+  }
 }
