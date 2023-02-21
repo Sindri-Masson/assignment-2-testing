@@ -10,23 +10,10 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['@typescript-eslint'],
+    plugins: ['@typescript-eslint', 'sindri'],
     rules: {
-        camelcase: [
-            'error',
-            {
-                properties: 'never',
-                ignoreDestructuring: true,
-                ignoreImports: true,
-            },
-        ],
-        'func-style': ['error', 'expression'],
-        'no-restricted-imports': [
-            'error',
-            {
-                patterns: ['moment'],
-            },
-        ],
-        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'sindri/no-moment': 'error',
+        'sindri/no-console': 'error',
+        'sindri/camel-case': 'error',
     },
 }
