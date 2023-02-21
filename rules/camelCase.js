@@ -6,7 +6,7 @@ module.exports = {
     },
     create(context) {
         return {
-            Identifier(node) {
+            FunctionDeclaraton(node) {
                 if (!node.name.match(/^[a-z]+([A-Z][a-z]+)*$/)) {
                     context.report({
                         node,
